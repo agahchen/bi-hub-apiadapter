@@ -8,11 +8,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import bcgov.jh.etk.jhetkcommon.model.PathConst;
 
 @RestController
 public class BiHubApiAdapterRestController {
@@ -36,7 +40,7 @@ public class BiHubApiAdapterRestController {
      *
      * @return the string
      */
-	@RequestMapping(value = "/event-webhook", method = RequestMethod.POST)
+	@PostMapping(path = "/event-webhook", produces = MediaType.TEXT_PLAIN_VALUE)
     public String eventHook(){
 		logger.info("event received from JH-ETK hub");
 		
@@ -46,10 +50,14 @@ public class BiHubApiAdapterRestController {
 	    try {
 	    	logger.info("Send request to Hub API {} to request eTK event KPI", url);
 	    	response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
+	    	logger.debug("Request sent");
 	    	if (HttpStatus.OK.equals(response.getStatusCode()) || HttpStatus.CREATED.equals(response.getStatusCode())) {
-	    		logger.info(response.getBody());
+	    		logger.info("Response successfully, code: {}, body: {}", response.getStatusCode(), response.getBody());
+	    		return response.getBody();
+			} else {
+				logger.debug("Response failed, code: {}", response.getStatusCode());
 			}
-	    	return response.getBody();
+	    	
 		} catch (Exception e) {
 			logger.error("Exception occurred requesting eTK event KPI from Hub: {}", e.toString() + "; " + e.getMessage()); 
     	}
