@@ -49,7 +49,7 @@ public class BiHubApiAdapterRestController {
 			}
 	    	return response.getBody();
 		} catch (Exception e) {
-			logger.error("Exception occurred requesting eTK event KPI from Hub: ", e.toString() + "; " + e.getMessage()); 
+			logger.error("Exception occurred requesting eTK event KPI from Hub: {}", e.toString() + "; " + e.getMessage()); 
     	}
 		
         return "{\"message\" : \"Failed requesting eVT KPI from the Hub\"}";
