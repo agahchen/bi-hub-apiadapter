@@ -46,7 +46,7 @@ public class BiHubApiAdapterRestController {
 		//send request to Hub api to request eTK event KPI
 	    try {
 	    	logger.info("Send request to Hub API {} to request eTK event KPI", url);
-	    	response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
+	    	response = restTemplate.exchange(url, HttpMethod.GET, getRequest(null, MediaType.APPLICATION_JSON), String.class);
 	    	logger.debug("Request sent");
 	    	if (HttpStatus.OK.equals(response.getStatusCode()) || HttpStatus.CREATED.equals(response.getStatusCode())) {
 	    		logger.info("Response successfully, code: {}, body: {}", response.getStatusCode(), response.getBody());
@@ -60,5 +60,17 @@ public class BiHubApiAdapterRestController {
     	}
 		
         return "{\"message\" : \"Failed requesting eVT KPI from the Hub\"}";
+    }
+	
+	protected HttpEntity<Object> getRequest(final Object payload, final MediaType contentType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(contentType);
+
+        if (payload != null) {
+            return new HttpEntity<>(payload, headers);
+        } else {
+            return new HttpEntity<>(headers);
+        }
+
     }
 }
