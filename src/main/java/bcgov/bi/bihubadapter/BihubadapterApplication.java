@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"bcgov.bi.bihubadapter.controller"})
+@ComponentScan(basePackages = {"bcgov.bi.bihubadapter"})
 public class BihubadapterApplication {
 
 	public static void main(String[] args) {
