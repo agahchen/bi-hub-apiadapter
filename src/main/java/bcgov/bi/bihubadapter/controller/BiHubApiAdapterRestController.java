@@ -51,7 +51,8 @@ public class BiHubApiAdapterRestController {
 	    	response = restTemplate.exchange(url, HttpMethod.GET, getRequest(null, MediaType.APPLICATION_JSON), String.class);
 	    	logger.debug("Request sent");
 	    	if (HttpStatus.OK.equals(response.getStatusCode()) || HttpStatus.CREATED.equals(response.getStatusCode())) {
-	    		logger.info("Response successfully, code: {}, body: {}", response.getStatusCode(), response.getBody());
+	    		logger.info("Request successfully sent, code: {}", response.getStatusCode());
+	    		logger.debug("Response body: \n{}", response.getBody());
 	    		return response.getBody();
 			} else {
 				logger.debug("Response failed, code: {}", response.getStatusCode());
