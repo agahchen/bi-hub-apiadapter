@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,11 +38,12 @@ public class BiHubApiAdapterRestController {
      *
      * @return the string
      */
+	@GetMapping(path = "/event-webhook", produces = MediaType.TEXT_PLAIN_VALUE)
 	@PostMapping(path = "/event-webhook", produces = MediaType.TEXT_PLAIN_VALUE)
     public String eventHook(){
 		logger.info("event received from JH-ETK hub");
 		
-		String url = hubBiApiURL + "/issuance/v3/lookup";
+		String url = hubBiApiURL + "/v3/issuance/lookup";
 		ResponseEntity<String> response = null;
 		//send request to Hub api to request eTK event KPI
 	    try {
