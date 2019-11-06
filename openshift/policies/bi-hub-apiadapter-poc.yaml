@@ -1,0 +1,15 @@
+apiVersion: secops.pathfinder.gov.bc.ca/v1alpha1
+kind: NetworkSecurityPolicy
+metadata:
+  name: bi-hub-apiadapter-poc
+spec:
+  description: |
+    allows bi-hub-apiadapter-poc in iowaey-dev to have two-way communication with jh-etk-api-pr-226 in jik2hd-dev
+    https://github.com/BCDevOps/platform-services/tree/master/security/aporeto/docs
+    https://github.com/BCDevOps/platform-services/blob/master/security/aporeto/docs/CustomPolicy.md
+  destination:
+    - - $namespace=jik2hd-dev
+    - - $namespace=iowaey-dev
+  source:
+    - - $namespace=iowaey-dev
+    - - $namespace=jik2hd-dev
