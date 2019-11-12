@@ -41,13 +41,17 @@ public class BiHubApiAdapterRestController {
 	@GetMapping(path = "/event-webhook", produces = MediaType.TEXT_PLAIN_VALUE)
 	@PostMapping(path = "/event-webhook", produces = MediaType.TEXT_PLAIN_VALUE)
     public String eventHook(){
-		logger.info("event received from JH-ETK hub");
+		logger.info("Event received from JH-ETK hub.");
 		
 		String url = hubBiApiURL + "/v3/issuance/lookup";
 		ResponseEntity<String> response = null;
 		//send request to Hub api to request eTK event KPI
 	    try {
-	    	logger.info("Send request to Hub API {} to request eTK event KPI", url);
+	    	logger.info("Sending request to Hub API {} to request eTK event KPI...", url);
+	    	
+	    	// sleep for 5 seconds
+			Thread.sleep(5000);
+	    	
 	    	response = restTemplate.exchange(url, HttpMethod.GET, getRequest(null, MediaType.APPLICATION_JSON), String.class);
 	    	logger.debug("Request sent");
 	    	if (HttpStatus.OK.equals(response.getStatusCode()) || HttpStatus.CREATED.equals(response.getStatusCode())) {
